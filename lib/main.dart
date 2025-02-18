@@ -1,16 +1,21 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expense/provider/expense_provider.dart';
+import 'package:personal_expense/provider/notification_provider.dart';
+import 'package:provider/provider.dart';
 import 'package:personal_expense/screens/home_screen.dart';
-import 'package:personal_expense/service_utils/notification_service.dart';
 
 void main() async {
-  WidgetsFlutterBinding.ensureInitialized(); // Important for notifications
+  WidgetsFlutterBinding.ensureInitialized();
 
-  // Initialize notifications
-  final notificationService = NotificationService();
-  // await notificationService.initialize();
-  await notificationService.initNotification();
-
-  runApp(const MyApp());
+  runApp(
+    MultiProvider(
+      providers: [
+        ChangeNotifierProvider(create: (_) => ExpenseProvider()),
+        ChangeNotifierProvider(create: (_) => NotificationProvider()),
+      ],
+      child: const MyApp(),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
@@ -25,7 +30,18 @@ class MyApp extends StatelessWidget {
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
         useMaterial3: true,
       ),
-      home: const HomeScreen(title: 'Expense Tracker'),
+      // Define initial route
+      initialRoute: '/',
+      // Define route generators
+      routes: {
+        '/': (context) => const HomePage(title: 'Expense Tracker'),
+      },
+      // Handle unknown routes
+      onUnknownRoute: (settings) {
+        return MaterialPageRoute(
+          builder: (context) => const HomePage(title: 'Expense Tracker'),
+        );
+      },
     );
   }
 }

@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:personal_expense/model/expense_model.dart';
+import 'package:personal_expense/screens/home_screen.dart';
 import 'package:uuid/uuid.dart';
 
 class ExpenseForm extends StatefulWidget {
@@ -110,7 +111,13 @@ class _ExpenseFormState extends State<ExpenseForm> {
                   category: _selectedCategory,
                 );
                 widget.onSubmit(expense);
-                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                      builder: (context) => const HomeScreen(
+                            title: "",
+                          )),
+                );
               }
             },
             child: const Text('Save'),

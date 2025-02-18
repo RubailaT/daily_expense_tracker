@@ -1,5 +1,5 @@
-import 'package:fl_chart/fl_chart.dart';
 import 'package:flutter/material.dart';
+import 'package:personal_expense/constants/color_class.dart';
 import 'package:personal_expense/provider/expense_provider.dart';
 import 'package:personal_expense/provider/notification_provider.dart';
 import 'package:provider/provider.dart';
@@ -9,20 +9,19 @@ import 'package:personal_expense/widgets/expense_chart.dart';
 import 'package:personal_expense/widgets/expense_filter.dart';
 import 'package:personal_expense/widgets/notification_settings.dart';
 
-class HomePage extends StatefulWidget {
-  const HomePage({super.key, required this.title});
+class HomeScreen extends StatefulWidget {
+  const HomeScreen({super.key, required this.title});
 
   final String title;
 
   @override
-  State<HomePage> createState() => _HomePageState();
+  State<HomeScreen> createState() => _HomeScreenState();
 }
 
-class _HomePageState extends State<HomePage> {
+class _HomeScreenState extends State<HomeScreen> {
   @override
   void initState() {
     super.initState();
-    // Load expenses when the page initializes
     _loadExpenses();
   }
 
@@ -59,7 +58,6 @@ class _HomePageState extends State<HomePage> {
         );
   }
 
-  // In your HomePage class
   void _showAddExpenseDialog() {
     showModalBottomSheet(
       context: context,
@@ -96,18 +94,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-// Update notification settings navigation
-// IconButton(
-//   icon: const Icon(Icons.notifications),
-//   onPressed: () {
-//     Navigator.of(context).push(
-//       MaterialPageRoute(
-//         builder: (context) => const NotificationSettingsPage(),
-//       ),
-//     );
-//   },
-// ),
-
   void _showEditExpenseDialog(Expense expense) {
     showModalBottomSheet(
       context: context,
@@ -139,7 +125,6 @@ class _HomePageState extends State<HomePage> {
     );
   }
 
-// ... rest of the HomePage code ...
   @override
   Widget build(BuildContext context) {
     return Consumer<ExpenseProvider>(
@@ -285,29 +270,32 @@ class _HomePageState extends State<HomePage> {
                                 horizontal: 8.0,
                                 vertical: 4.0,
                               ),
-                              child: ListTile(
-                                onTap: () => _showEditExpenseDialog(expense),
-                                leading: CircleAvatar(
-                                  backgroundColor:
-                                      Theme.of(context).primaryColor,
-                                  child: Icon(
-                                    _getCategoryIcon(expense.category),
-                                    color: Colors.white,
+                              child: Padding(
+                                padding: const EdgeInsets.all(8.0),
+                                child: ListTile(
+                                  onTap: () => _showEditExpenseDialog(expense),
+                                  leading: CircleAvatar(
+                                    backgroundColor:
+                                        Theme.of(context).primaryColor,
+                                    child: Icon(
+                                      _getCategoryIcon(expense.category),
+                                      color: Colors.white,
+                                    ),
                                   ),
-                                ),
-                                title: Text(
-                                  expense.description,
-                                  style: const TextStyle(
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                subtitle: Text(
-                                  '${expense.category.toString().split('.').last} - ${_formatDate(expense.date)}',
-                                ),
-                                trailing: Text(
-                                  '\$${expense.amount.toStringAsFixed(2)}',
-                                  style: const TextStyle(
-                                    fontWeight: FontWeight.bold,
-                                    fontSize: 16,
+                                  title: Text(
+                                    expense.description,
+                                    style: const TextStyle(
+                                        fontWeight: FontWeight.bold),
+                                  ),
+                                  subtitle: Text(
+                                    '${expense.category.toString().split('.').last} - ${_formatDate(expense.date)}',
+                                  ),
+                                  trailing: Text(
+                                    '\$${expense.amount.toStringAsFixed(2)}',
+                                    style: const TextStyle(
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 16,
+                                    ),
                                   ),
                                 ),
                               ),
@@ -319,10 +307,13 @@ class _HomePageState extends State<HomePage> {
             ],
           ),
           floatingActionButton: FloatingActionButton.extended(
+            backgroundColor: ColorClass.primaryColor,
             onPressed: _showAddExpenseDialog,
             tooltip: 'Add Expense',
             icon: const Icon(Icons.add),
-            label: const Text('Add Expense'),
+            label: const Text(
+              'Add Expense',
+            ),
           ),
         );
       },

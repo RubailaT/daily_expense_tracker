@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:personal_expense/constants/color_class.dart';
 import 'package:personal_expense/provider/expense_provider.dart';
 import 'package:personal_expense/provider/notification_provider.dart';
 import 'package:provider/provider.dart';
@@ -27,19 +28,19 @@ class MyApp extends StatelessWidget {
       debugShowCheckedModeBanner: false,
       title: 'Expense Tracker',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.green),
+        colorScheme: ColorScheme.fromSeed(seedColor: ColorClass.primaryColor),
         useMaterial3: true,
       ),
-      // Define initial route
+
       initialRoute: '/',
-      // Define route generators
+
       routes: {
-        '/': (context) => const HomePage(title: 'Expense Tracker'),
+        '/': (context) => const HomeScreen(title: 'Expense Tracker'),
       },
       // Handle unknown routes
       onUnknownRoute: (settings) {
         return MaterialPageRoute(
-          builder: (context) => const HomePage(title: 'Expense Tracker'),
+          builder: (context) => const HomeScreen(title: 'Expense Tracker'),
         );
       },
     );

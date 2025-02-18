@@ -14,7 +14,7 @@ import 'package:personal_expense/screens/home_screen.dart';
 void main() {
   testWidgets('Counter increments smoke test', (WidgetTester tester) async {
     // Build our app and trigger a frame.
-    await tester.pumpWidget(const HomePage(
+    await tester.pumpWidget(const HomeScreen(
       title: "",
     ));
 
